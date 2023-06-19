@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
 const Todo = require("../models/todo");
 
 module.exports.createTodo = async (req, res) => {
   try {
+    const userId = req.user.userId;
     const { title, description, completed } = req.body;
     const todo = new Todo({
       title,
       description,
       completed,
+      userId: userId,
     });
     const savedTodo = await todo.save();
     res.status(201).json(savedTodo);
@@ -71,5 +72,18 @@ module.exports.deleteTodo = async (req, res) => {
     res.json({ message: "Todo deleted successfully" });
   } catch (error) {
     res.status(400).json({ error: "Failed to delete todo" });
+  }
+};
+
+module.exports.getTodoByUserId = async (req, res) => {
+  try {
+    const userId = req.user.userId; // Assuming the decoded user ID is available in the `req.user` object after authentication
+
+    // Fetch todos by user ID
+    const todos = await Todo.find({ userId });
+
+    res.json(todos);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch todos" });
   }
 };
