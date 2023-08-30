@@ -4,7 +4,7 @@ var router = express.Router();
 const controllers = require("../../controllers/todo");
 const middleware = require("../../middleware/authentication");
 
-router.post("/todo", middleware.authenticateMiddleware, controllers.createTodo);
+router.post("/todo", controllers.createTodo);
 router.get("/todo", controllers.getTodo);
 router.patch("/todo/:id", controllers.updateTodo);
 router.delete("/todo/:id", controllers.deleteTodo);
