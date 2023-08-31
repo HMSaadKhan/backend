@@ -2,10 +2,15 @@ const express = require("express");
 const { database } = require("./db");
 const todoRoutes = require("./routes/api/todo");
 const userRoutes = require("./routes/api/user");
+const cors = require('cors');
 
 const app = express();
 
 const port = 3001;
+
+app.use(cors({
+    origin: '*'
+}));
 
 app.use(express.json());
 
